@@ -9,7 +9,12 @@ import ProfileEdit from './pages/ProfileEdit';
 import NotFound from './pages/NotFound';
 
 class App extends React.Component {
+  state = {
+    loading: false,
+  }
+
   render() {
+    const { loading } = this.state;
     return (
       <div>
         <p>TrybeTunes</p>
@@ -19,11 +24,31 @@ class App extends React.Component {
             path="/"
             render={ (props) => (<Login { ...props } />) }
           />
-          <Route exact path="/search" render={ () => <Search /> } />
-          <Route exact path="/album/:id" render={ () => <Album /> } />
-          <Route exact path="/favorites" render={ () => <Favorites /> } />
-          <Route exact path="/profile" render={ () => <Profile /> } />
-          <Route exact path="/profile/edit" render={ () => <ProfileEdit /> } />
+          <Route
+            exact
+            path="/search"
+            render={ () => <Search loading={ loading } /> }
+          />
+          <Route
+            exact
+            path="/album/:id"
+            render={ () => <Album loading={ loading } /> }
+          />
+          <Route
+            exact
+            path="/favorites"
+            render={ () => <Favorites loading={ loading } /> }
+          />
+          <Route
+            exact
+            path="/profile"
+            render={ () => <Profile loading={ loading } /> }
+          />
+          <Route
+            exact
+            path="/profile/edit"
+            render={ () => <ProfileEdit loading={ loading } /> }
+          />
           <Route render={ () => <NotFound /> } />
         </Switch>
       </div>
