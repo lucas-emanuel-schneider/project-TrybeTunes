@@ -27,27 +27,27 @@ class App extends React.Component {
           <Route
             exact
             path="/search"
-            render={ () => <Search loading={ loading } /> }
+            render={ () => <Search /> }
           />
           <Route
             exact
             path="/album/:id"
-            render={ () => <Album loading={ loading } /> }
+            render={ () => <Album /> }
           />
           <Route
             exact
             path="/favorites"
-            render={ () => <Favorites loading={ loading } /> }
+            render={ () => <Favorites /> }
           />
           <Route
             exact
             path="/profile"
-            render={ () => <Profile loading={ loading } /> }
+            render={ () => <Profile /> }
           />
           <Route
             exact
             path="/profile/edit"
-            render={ () => <ProfileEdit loading={ loading } /> }
+            render={ () => <ProfileEdit /> }
           />
           <Route render={ () => <NotFound /> } />
         </Switch>
