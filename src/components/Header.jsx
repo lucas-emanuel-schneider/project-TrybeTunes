@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { getUser } from '../services/userAPI';
 import Loading from '../pages/Loading';
 
 export default class Header extends Component {
-  state = { userState: '' }
+  state = { userState: '',
+    loading: false }
 
   componentDidMount() {
     this.gettingUser();
@@ -26,7 +26,3 @@ export default class Header extends Component {
     );
   }
 }
-
-Header.propTypes = {
-  loading: PropTypes.bool.isRequired,
-};

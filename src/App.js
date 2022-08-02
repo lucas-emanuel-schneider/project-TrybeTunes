@@ -9,12 +9,7 @@ import ProfileEdit from './pages/ProfileEdit';
 import NotFound from './pages/NotFound';
 
 class App extends React.Component {
-  state = {
-    loading: false,
-  }
-
   render() {
-    const { loading } = this.state;
     return (
       <div>
         <p>TrybeTunes</p>
