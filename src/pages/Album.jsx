@@ -39,8 +39,8 @@ export default class Album extends Component {
         <Header />
         <h1 data-testid="album-name">{ collectionName }</h1>
         <h3 data-testid="artist-name">{ artistName }</h3>
-        { albumInfoAndTracks.filter((_, index) => index).map((music, index) => (
-          <MusicCard key={ index } { ...music } />
+        { albumInfoAndTracks.filter((_, index) => index).map((music) => (
+          <MusicCard key={ music.trackId } { ...music } />
         )) }
       </div>
     );
