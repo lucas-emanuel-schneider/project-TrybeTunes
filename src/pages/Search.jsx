@@ -10,6 +10,7 @@ export default class Search extends Component {
     loading: false,
     searchResults: [],
     artist: '',
+    buttonClick: false,
   }
 
   inputChange = ({ target }) => {
@@ -25,13 +26,14 @@ export default class Search extends Component {
     const items = await searchAlbumsAPI(searchValue);
     this.setState({ loading: false, artist: searchValue }, () => {
       this.setState({ searchResults: items,
-        searchValue: '' });
+        searchValue: '',
+        buttonClick: true });
     });
   }
 
   render() {
     const minimumInputLength = 2;
-    const { searchValue, loading, searchResults, artist } = this.state;
+    const { searchValue, loading, searchResults, artist, buttonClick } = this.state;
     return (
       <div data-testid="page-search">
         <Header />
@@ -55,37 +57,40 @@ export default class Search extends Component {
                     Pesquisar
                   </button>
                 </form>
-                <div>
-                  { (searchResults.length === 0) ? <p>Nenhum álbum foi encontrado</p> : (
-                    <div>
-                      <h1>{ `Resultado de álbuns de: ${artist}` }</h1>
-                      { searchResults.map(({
-                        artistName,
-                        collectionId,
-                        collectionName,
-                        artworkUrl100,
-                        collectionPrice,
-                        releaseDate,
-                        trackCount,
-                      }) => (
-                        <div key={ collectionId }>
-                          <img src={ artworkUrl100 } alt={ artistName } />
-                          <h3>{ artistName }</h3>
-                          <p>{ collectionPrice }</p>
-                          <p>{ releaseDate }</p>
-                          <p>{ trackCount }</p>
-                          <Link
-                            to={ `/album/${collectionId}` }
-                            data-testid={ `link-to-album-${collectionId}` }
-                          >
-                            { collectionName }
-                          </Link>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                { !buttonClick ? null : (
+                  <div>
+                    { (!searchResults.length) ? <p>Nenhum álbum foi encontrado</p> : (
+                      <div>
+                        <h1>{ `Resultado de álbuns de: ${artist}` }</h1>
+                        { searchResults.map(({
+                          artistName,
+                          collectionId,
+                          collectionName,
+                          artworkUrl100,
+                          collectionPrice,
+                          releaseDate,
+                          trackCount,
+                        }) => (
+                          <div key={ collectionId }>
+                            <img src={ artworkUrl100 } alt={ artistName } />
+                            <h3>{ artistName }</h3>
+                            <p>{ collectionPrice }</p>
+                            <p>{ releaseDate }</p>
+                            <p>{ trackCount }</p>
+                            <Link
+                              to={ `/album/${collectionId}` }
+                              data-testid={ `link-to-album-${collectionId}` }
+                            >
+                              { collectionName }
+                            </Link>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
-                </div>
+                  </div>
+                )}
+
               </div>
             )
         }
