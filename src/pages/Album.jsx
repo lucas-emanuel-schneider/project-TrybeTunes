@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import Loading from './Loading';
 import MusicCard from './MusicCard';
+import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 export default class Album extends Component {
   state = {
@@ -11,10 +12,19 @@ export default class Album extends Component {
     albumInfoAndTracks: [],
     artistName: '',
     collectionName: '',
+    getFavoritesResult: [],
   }
 
   componentDidMount() {
     this.searchMusics();
+    this.getFavoriteSongs();
+  }
+
+  getFavoriteSongs = async () => {
+    this.setState({ loading: true });
+    const getFavoritesResult = await getFavoriteSongs();
+    this.setState({ loading: false,
+      getFavoritesResult });
   }
 
   searchMusics = async () => {
@@ -33,14 +43,24 @@ export default class Album extends Component {
   }
 
   render() {
-    const { loading, albumInfoAndTracks, artistName, collectionName } = this.state;
+    const {
+      loading,
+      albumInfoAndTracks,
+      artistName,
+      collectionName,
+      getFavoritesResult } = this.state;
     return loading ? <Loading /> : (
       <div data-testid="page-album">
         <Header />
         <h1 data-testid="album-name">{ collectionName }</h1>
         <h3 data-testid="artist-name">{ artistName }</h3>
         { albumInfoAndTracks.filter((_, index) => index).map((music) => (
-          <MusicCard key={ music.trackId } { ...music } />
+          <MusicCard
+            key={ music.trackId }
+            { ...music }
+            FavoriteChecked={ getFavoritesResult
+              .some(({ trackId }) => trackId === music.trackId) }
+          />
         )) }
       </div>
     );
