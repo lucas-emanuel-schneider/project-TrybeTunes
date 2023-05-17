@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import Loading from './Loading';
 import MusicCard from './MusicCard';
-import { getFavoriteSongs } from '../services/favoriteSongsAPI';
+// import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 export default class Album extends Component {
   state = {
@@ -12,20 +12,19 @@ export default class Album extends Component {
     albumInfoAndTracks: [],
     artistName: '',
     collectionName: '',
-    getFavoritesResult: [],
+    // getFavoritesResult: [],
   }
 
   componentDidMount() {
     this.searchMusics();
-    this.getFavoriteSongs();
   }
 
-  getFavoriteSongs = async () => {
-    this.setState({ loading: true });
-    const getFavoritesResult = await getFavoriteSongs();
-    this.setState({ loading: false,
-      getFavoritesResult });
-  }
+  // getFavoriteSongs = async () => {
+  //   this.setState({ loading: true });
+  //   const getFavoritesResult = await getFavoriteSongs();
+  //   this.setState({ loading: false,
+  //     getFavoritesResult });
+  // }
 
   searchMusics = async () => {
     this.setState({ loading: true });
@@ -48,7 +47,7 @@ export default class Album extends Component {
       albumInfoAndTracks,
       artistName,
       collectionName,
-      getFavoritesResult } = this.state;
+    } = this.state;
     return loading ? <Loading /> : (
       <div data-testid="page-album">
         <Header />
@@ -58,8 +57,8 @@ export default class Album extends Component {
           <MusicCard
             key={ music.trackId }
             { ...music }
-            FavoriteChecked={ getFavoritesResult
-              .some(({ trackId }) => trackId === music.trackId) }
+            // FavoriteChecked={ getFavoritesResult
+            //   .some(({ trackId }) => trackId === music.trackId) }
           />
         )) }
       </div>
